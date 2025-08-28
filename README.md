@@ -29,7 +29,7 @@ It provides a simple **web UI (Thymeleaf)** and **REST API** for classifying tex
    ```bash
    git clone https://github.com/mayowa2133/customer-sentiment-analyzer.git
    cd customer-sentiment-analyzer
-````
+
 
 2. Add your Hugging Face API token in `application.properties`:
 
