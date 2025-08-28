@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Sentiment Analyzer</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        textarea { width: 100%; height: 120px; margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; }
+        .result { margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; }
+        canvas { margin-top: 20px; max-width: 400px; }
+    </style>
+</head>
+<body>
+    <h1>📊 Customer Sentiment Analyzer</h1>
+
+    <form action="/analyze" method="post">
+        <label for="messages">Enter customer feedback (one per line):</label><br>
+        <textarea id="messages" name="messages" th:text="${messages}"></textarea><br>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <div th:if="${result}" class="result">
+        <h2>Results</h2>
+        <p>✅ Positive: <span th:text="${result.positive}"></span></p>
+        <p>😐 Neutral: <span th:text="${result.neutral}"></span></p>
+        <p>❌ Negative: <span th:text="${result.negative}"></span></p>
+        <p th:if="${result.needsAttention}">
+            🚨 Needs Attention: <strong th:text="${result.needsAttention}"></strong>
+        </p>
+
+        <!-- Chart.js canvas -->
+        <canvas id="sentimentChart"></canvas>
+    </div>
+
+    <!-- Inject JavaScript values from Thymeleaf -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let hasResult = /*[[${result != null}]]*/ false;
+
+        if (hasResult) {
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Positive', 'Neutral', 'Negative'],
+                    datasets: [{
+                        label: 'Sentiment Distribution',
+                        data: [
+                            /*[[${result.positive}]]*/ 0,
+                            /*[[${result.neutral}]]*/ 0,
+                            /*[[${result.negative}]]*/ 0
+                        ],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(201, 203, 207, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(201, 203, 207, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+        /*]]>*/
+    </script>
+</body>
+</html>
