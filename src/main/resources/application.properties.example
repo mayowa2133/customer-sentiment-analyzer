@@ -1,0 +1,5 @@
+# Hugging Face API endpoint
+huggingface.api.url=https://api-inference.huggingface.co/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english
+
+# Hugging Face token is injected via environment variable
+HF_API_TOKEN=${HF_API_TOKEN}
