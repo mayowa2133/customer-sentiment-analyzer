@@ -94,8 +94,8 @@ It’s okay
 
 ```json
 {
-  "positive": 1,
-  "neutral": 1,
+  "positive": 2,
+  "neutral": 0,
   "negative": 1,
   "needsAttention": "This is terrible"
 }
